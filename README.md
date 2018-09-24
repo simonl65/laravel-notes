@@ -146,3 +146,14 @@ public function getCreatedDateAttribute()
     return $this->created_at->diffForHumans();
 }
 ```
+
+## Tinker examples
+```tinker
+>>> $q = App\Question::first();
+
+>>> $q->created_at;
+
+>>> $q->created_at->diffForHumans();
+
+>>> $q->created_at->format('Y-m-d H:i');
+```

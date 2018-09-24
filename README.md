@@ -76,12 +76,6 @@ The `--resource` flag adds the following to the controller:
 | update()  | Update the specified resource in storage. |
 | destroy() | Remove the specified resource from storage. |
 
-  
-| Command | Description |
-| --- | --- |
-| `git status` | List all *new or modified* files |
-| `git diff` | Show file differences that **haven't been** staged |
-
 The `--model=Question` flag indicates which model to use.
 
 _NOTE:_

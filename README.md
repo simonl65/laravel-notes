@@ -146,6 +146,17 @@ public function getCreatedDateAttribute()
     return $this->created_at->diffForHumans();
 }
 ```
+...and in `User.php`:
+```php
+/**
+ * Attribute accessor for $question->user->url required in the view:
+ */
+public function getUrlAttribute()
+{
+    // return route('questions.show', $this->id);
+    return '#';
+}
+```
 
 ## Tinker examples
 ```tinker

@@ -168,3 +168,17 @@ public function getUrlAttribute()
 
 >>> $q->created_at->format('Y-m-d H:i');
 ```
+
+## Add Laravel debug bar
+`composer require barryvdh/laravel-debugbar --dev`
+
+## Eager loading from database
+Lazy loading is where multiple queries are used to extract database data:
+```php
+$questions = Question::latest()->paginate(5);
+```
+The above results in 5 calls to get user data! This can be overcome by adding a `with()` clause that makes use of the model relationships we created earlier:
+```php
+$questions = Question::with('user')->latest()->paginate(5);
+```
+_This line is found in `QuestionsController.php`_

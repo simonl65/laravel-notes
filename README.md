@@ -61,6 +61,17 @@ In `web.php`:
 ```php
 Route::resource('questions', 'QuestionsController');
 ```
+
+_NOTE:_
+You could also do the following to be more specific:
+```php
+Route::get('/dummy', 'DummyController@index');
+Route::post('/dummy', 'DummyController@store');
+Route::delete('/dummy', 'DummyController@destroy');
+:
+:
+```
+...then
 ```php
 php artisan make:controller QuestionsController --resource --model=Question
 ```
@@ -77,16 +88,6 @@ The `--resource` flag adds the following to the controller:
 | destroy() | Remove the specified resource from storage. |
 
 The `--model=Question` flag indicates which model to use.
-
-_NOTE:_
-You could also do the following to be more specific:
-```php
-Route::get('/dummy', 'DummyController@index');
-Route::post('/dummy', 'DummyController@store');
-Route::delete('/dummy', 'DummyController@destroy');
-:
-:
-```
 ## Eloquent
 In `QuestionsController.php`  
 Get all questions but show only the latest 5 initially:

@@ -67,13 +67,13 @@ php artisan make:controller QuestionsController --resource --model=Question
 The `--resource` flag adds the following to the controller:  
 | Flag      | Description |
 |:----------|:------------|
-| index()   | Display a listing of the resource.
-| create()  | Show the form for creating a new resource.
-| store()   | Store a newly created resource in storage.
-| show()    | Display the specified resource.
-| edit()    | Show the form for editing the specified resource.
-| update()  | Update the specified resource in storage.
-| destroy() | Remove the specified resource from storage.
+| index()   | Display a listing of the resource. |
+| create()  | Show the form for creating a new resource. |
+| store()   | Store a newly created resource in storage. |
+| show()    | Display the specified resource. |
+| edit()    | Show the form for editing the specified resource. |
+| update()  | Update the specified resource in storage. |
+| destroy() | Remove the specified resource from storage. |
 
 The `--model=Question` flag indicates which model to use.
 

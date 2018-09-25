@@ -157,6 +157,29 @@ public function getUrlAttribute()
     return '#';
 }
 ```
+### Dynamic class names via accessors
+If we have:
+```html
+<div class="status {{ $question->status }}">
+```
+then we can create an accessor for the class setting:
+```php
+/**
+ * Accessor for $question->status:
+ *
+ * Returns a class name relevant to the answered status of the question.
+ */
+public function getStatusAttribute()
+{
+    if ($this->answers > 0) {
+        if($this->best_answer_id) {
+            return 'answered-accepted';
+        }
+        return 'answered';
+    }
+    return 'unanswered';
+}
+```
 
 ## Tinker examples
 ```tinker

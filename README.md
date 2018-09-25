@@ -300,3 +300,25 @@ public function destroy(Question $question)
 
 ## Escaped output with new-lines too
 `{!! nl2br(e($question->body)) !!}`
+
+## Override controller method
+In `web.php`:
+```php
+// Let a resource handle all routes except 'show':
+Route::resource('questions', 'QuestionsController')->except('show');
+
+// Show question details using the slug - instead of the (default) question id:
+Route::get('/questiosns/{slug}', 'QuestionsController@show')->name('questions.show');
+```
+In `RouteServiceProvider.php`:
+```php
+public function boot()
+{
+    Route::bind('slug', function($slug) {
+        $question = Question::where('slug', $slug)->first();
+        return $question ? $question : abort(404);
+    });
+
+    parent::boot();
+}
+```

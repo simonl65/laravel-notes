@@ -271,3 +271,8 @@ Add 'edit' button to right of record's title:
 </div>
 ```
 Note the `{{ route('questions.edit', $question->id) }}` in the href.
+
+### Showing old/editable values
+`
+{{ old('title', $question->title) }}
+`

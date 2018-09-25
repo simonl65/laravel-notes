@@ -270,9 +270,20 @@ Add 'edit' button to right of record's title:
     </div>
 </div>
 ```
-Note the `{{ route('questions.edit', $question->id) }}` in the href.
+_Note_ the `{{ route('questions.edit', $question->id) }}` in the href.
 
 ### Showing old/editable values
 `
 {{ old('title', $question->title) }}
 `
+
+### Save edited data
+In `QuestionsController.php` modify the `update()` function:
+```php
+public function update(AskQuestionRequest $request, Question $question)
+{
+    $question->update( $request->only(['title', 'body']) );
+    return redirect(route('questions.index'));
+}
+```
+_Note_ the `update(AskQuestionRequest...` parameter.  

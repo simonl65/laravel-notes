@@ -229,3 +229,33 @@ _This line is found in `QuestionsController.php`_
     <small id="helptitle" class="form-text text-muted">Keep it short!</small>
 @endif
 ```
+
+## Validation
+We'll use a seperate file for the validation of form submissions (requests), so:
+`php artisan make:request AskQuestionRequest`
+Now open `app\Http\Requests\AskQuestionRequest.php` to add validations/rules.
+
+```php
+public function rules()
+{
+    return [
+        'title' => 'required|min=5|max=255',
+        'body' =>'required|min=5'
+    ];
+}
+```
+In `QuestionsController.php` modify the `store()` function:
+```php
+public function store(AskQuestionRequest $request)
+{
+    // Get current user via questions relationship:
+    $request->user()->questions()->create( $request->only('title', 'body') );
+    //                  ^ adds user_id
+
+    return redirect()->route('questions.index')->with('success', "Your question has been submitted.");
+}
+```
+...and import the `AskQuestionRequest` file:
+```php
+use App\Http\Requests\AskQuestionRequest;
+```

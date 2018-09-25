@@ -297,3 +297,6 @@ public function destroy(Question $question)
     return redirect(route('questions.index'))->with('success', "That question has now been deeted.");
 }
 ```
+
+## Escaped output with new-lines too
+`{!! nl2br(e($question->body)) !!}`

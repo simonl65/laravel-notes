@@ -259,3 +259,15 @@ public function store(AskQuestionRequest $request)
 ```php
 use App\Http\Requests\AskQuestionRequest;
 ```
+
+## Editing
+Add 'edit' button to right of record's title:
+```html
+<div class="d-flex align-items-center">
+    <h3 class="mt-0"><a href="{{ $question->url }}">{{ $question->title }}</a></h3>
+    <div class="ml-auto">
+    <a href="{{ route('questions.edit', $question->id) }}" class="btn btn-sm btn-outline-info mr-1">Edit</a>
+    </div>
+</div>
+```
+Note the `{{ route('questions.edit', $question->id) }}` in the href.

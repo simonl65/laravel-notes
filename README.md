@@ -283,7 +283,7 @@ In `QuestionsController.php` modify the `update()` function:
 public function update(AskQuestionRequest $request, Question $question)
 {
     $question->update( $request->only(['title', 'body']) );
-    return redirect(route('questions.index'));
+    return redirect(route('questions.index'))->with('success', 'Your question has been updated.');
 }
 ```
 _Note_ the `update(AskQuestionRequest...` parameter.  

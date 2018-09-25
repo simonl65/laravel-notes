@@ -205,3 +205,8 @@ The above results in 5 calls to get user data! This can be overcome by adding a 
 $questions = Question::with('user')->latest()->paginate(5);
 ```
 _This line is found in `QuestionsController.php`_
+
+## Inline routing
+```html
+<a href="{{ route('questions.create') }}" class="btn btn-outline-secondary">Ask Question</a>
+```

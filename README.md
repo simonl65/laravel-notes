@@ -287,3 +287,13 @@ public function update(AskQuestionRequest $request, Question $question)
 }
 ```
 _Note_ the `update(AskQuestionRequest...` parameter.  
+
+### Delete a record
+In `QuestionsController.php`:
+```php
+public function destroy(Question $question)
+{
+    $question->delete();
+    return redirect(route('questions.index'))->with('success', "That question has now been deeted.");
+}
+```

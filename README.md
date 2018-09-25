@@ -213,3 +213,19 @@ _This line is found in `QuestionsController.php`_
 ```html
 <form action="{{ route('questions.store') }}" method="post" class="form">
 ```
+
+## Forms
+### Error feedback
+```html
+@csrf
+
+<input type="text" class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" name="title" id="title" aria-describedby="helptitle" placeholder="Your question here">
+
+@if ( $errors->has('title') )
+    <div class="invalid-feedback">
+        <strong>{{ $errors->first('title') }}</strong>
+    </div>
+@else
+    <small id="helptitle" class="form-text text-muted">Keep it short!</small>
+@endif
+```

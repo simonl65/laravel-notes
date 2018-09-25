@@ -324,3 +324,10 @@ public function boot()
     parent::boot();
 }
 ```
+
+## Clean output with whitelisted HTML
+First install "purifier" using `composer require mews/purifier` then:
+```
+{!! clean(nl2br($question->body)) !!}
+```
+This will allow _whitelisted_ HTML such as \<style\> and \<em\>, but **not** \<script\>

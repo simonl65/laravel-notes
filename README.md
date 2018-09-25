@@ -210,3 +210,6 @@ _This line is found in `QuestionsController.php`_
 ```html
 <a href="{{ route('questions.create') }}" class="btn btn-outline-secondary">Ask Question</a>
 ```
+```html
+<form action="{{ route('questions.store') }}" method="post" class="form">
+```

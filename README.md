@@ -481,4 +481,9 @@ public function user()
 
 ??? TODO: Did I miss something here?
 
-## 
+## Make an answer factory
+`php artisan make:factory AnswerFactory`  
+
+*****
+** 6:17 Generating fake answers part 1 of 2 **
+*****

@@ -331,3 +331,32 @@ First install "purifier" using `composer require mews/purifier` then:
 {!! clean(nl2br($question->body)) !!}
 ```
 This will allow _whitelisted_ HTML such as \<style\> and \<em\>, but **not** \<script\>
+
+# Authorization
+## Gate
+In `AuthServiceProvider.php`'s `boot()` method:
+```php
+// Is user authz to edit this question?:
+\Gate::define('update-question', function($user, $question) {
+    // Match current user with tha of the question:
+    return $user->id == $question->user_id;
+});
+
+// Is user authz to delete this quetsion?:
+\Gate::define('delete-question', function($user, $question) {
+    // Match current user with tha of the question:
+    return $user->id == $question->user_id;
+});
+```
+In `QuestionsController.php`'s `edit()` method:
+```php
+if (\Gate::denies('update-question', $question)) {
+    abort(403, "You don't have access to that question!");
+}
+return view('questions.edit', compact('question'));
+```
+To use the Gates add the following to your template:
+```php
+@if (Auth::user()->can('delete-question', $question))
+```
+_NOTE_ This says: If the user is logged-in, can they delete this question.  

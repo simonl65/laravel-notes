@@ -423,3 +423,62 @@ public function __construct() {
     $this->middleware('auth', ['except' => ['index', 'show']]);
 }
 ```
+
+## Enabling answers to questions
+### Make the Answer model
+`php artisan make:model Answer -m`  
+
+Now add fields to te model:
+```php
+Schema::create('answers', function (Blueprint $table) {
+    $table->increments('id');
+    $table->unsignedInteger('question_id');
+    $table->unsignedInteger('user_id');
+    $table->text('body');
+    $table->integer('votes_count')->default(0);
+    $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+    $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+});
+```
+...then `php artisan migrate`  
+
+### Create relationships
+In `Question.php` and `User.php` add:
+```php
+/**
+ * Define relationship - Questions may have many answers:
+ */
+public function answers()
+{
+    return $this->hasMany(Answer::class);
+}
+```
+ In `Answer.php` add:
+ ```php
+ /**
+  * Answers belong to questions:
+  */
+ public function question()
+ {
+     return $this->belongsTo(Question::class);
+ }
+
+ /**
+  * Answers belong to users:
+  */
+public function user()
+{
+    return $this->belongsTo(User::class);
+}
+```
+
+### Add migration to rename answers column in questions table
+`php artisan make:migration rename_answers_in_questions_table --table=questions`  
+...then:
+`composer require doctrine/dbal`  
+...then:
+`php artisan migrate`  
+
+??? TODO: Did I miss something here?
+
+## 

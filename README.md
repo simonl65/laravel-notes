@@ -333,7 +333,7 @@ First install "purifier" using `composer require mews/purifier` then:
 This will allow _whitelisted_ HTML such as \<style\> and \<em\>, but **not** \<script\>
 
 # Authorization
-## Gate
+## By Gate
 In `AuthServiceProvider.php`'s `boot()` method:
 ```php
 // Is user authz to edit this question?:
@@ -360,3 +360,66 @@ To use the Gates add the following to your template:
 @if (Auth::user()->can('delete-question', $question))
 ```
 _NOTE_ This says: If the user is logged-in, can they delete this question.  
+
+## By Policy
+### Set-up policy
+First we need to set-up a policy for the Question model:  
+`php artisan make:policy QuestionPolicy --model=Question`  
+
+### Add method checks in the policy
+Then in `app\Policies\QuestionPolicy.php` we can add our auth checks in the relevant (`update` & `delete`) methods:
+```php
+public function update(User $user, Question $question)
+{
+    // If the current user is the creator of the question, allow update:
+    return $user->id === $question->user_id;
+}
+
+public function delete(User $user, Question $question)
+{
+    // If the current user is the creator of the question AND the question
+    // has NO answer then deletion is allowed:
+    return $user->id === $question->user_id && $question->answers < 1;
+}
+```
+
+### Map policy to model
+Now map the Question model to Question policy in `AuthServiceProvider.php`:
+```php
+use App\Question;
+use App\Policies\QuestionPolicy;
+:
+:
+protected $policies = [
+    Question::class => QuestionPolicy::class,
+];
+
+```
+
+### Add authz to controller
+In `QuestionsController.php` method(s) add:
+```php
+$this->authorize('<methodName>', $question);
+```
+where \<methodName> is 'view', 'create', 'update', 'delete', 'restore' or 'forceDelete'.
+
+### Use authz in views
+```php
+@if (Auth::user()->can('<methodName>', $question))
+    // Show something:
+@endif
+```
+...or:
+```php
+@can('<methodName>', $question)
+    // Show something:
+@endcan
+```
+
+### Authz on all methods (with exceptions)
+In `QuestionsController.php` add a constructor:
+```php
+public function __construct() {
+    $this->middleware('auth', ['except' => ['index', 'show']]);
+}
+```
